@@ -52,8 +52,13 @@ impl BrainfuckInterpreter {
         }
     }
 
-    pub fn run(&mut self) {
+    fn reset_interpreter(&mut self) {
         self.instruction_pointer = 0;
+        self.data_pointer = 0;
+        self.data = [0; 30000];
+    }
+
+    pub fn run(&mut self) {
         while let Some(current_operation) = self.get_current_operation() {
             match current_operation {
                 BrainfuckOperation::MovePointerRight => {
@@ -105,6 +110,7 @@ impl BrainfuckInterpreter {
             }
             self.move_to_next_operation();
         }
+        self.reset_interpreter();
     }
 
     fn move_to_next_operation(&mut self) {
